@@ -1,0 +1,21 @@
+# Replicaset definition file for application
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-replicaset
+  labels:
+     app: myapp
+spec:
+  template:
+     metadata:
+       name: myapp-pod
+       labels:
+         app: myapp
+     spec:
+       containers:
+         - image: aravind85tvr/ninja:dev
+           name: coreapp
+  replicas: 3
+  selector:
+       matchLabels:
+           app: myap

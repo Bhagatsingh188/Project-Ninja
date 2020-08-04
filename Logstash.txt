@@ -1,0 +1,26 @@
+# Logstash configuration with grok filter
+input {
+      file {
+        path => [
+               "/mnt/srvapp/coreapp/logs/project.log",
+               "/mnt/srvapp/loginapp/logs/project.log"
+               ]
+        start_position => "beginning"
+        sincedb_path => "/dev/null"
+      }
+}
+
+filter {
+      grok {
+         match => {
+            "message" => "%{WORD:first_word} %{WORD:Second_word} %{WORD:Third_word} %{GREEDYDATA:Rest_word}"
+         }
+      }
+}
+
+output {
+      elasticsearch {
+         hosts => ["40.117.128.255:9200"]
+         index => "logstash-index"
+       }
+}
